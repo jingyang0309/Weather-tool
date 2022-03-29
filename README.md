@@ -1,10 +1,10 @@
 # Getting Started with Create React App
 
-基本 useState 已經完成,目前正準備改寫 Reduer
+基本 useState 已經完成,目前正準備改寫 Redux
 
 ## 基本事項
 
-### npm install
+### `npm install`
 
 ### `中央氣象局api`
 
