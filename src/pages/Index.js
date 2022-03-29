@@ -80,7 +80,7 @@ export default function Index(props) {
     // Get 未來天氣
     ;(async function () {
       // 寫入你的paylaod
-      const payload = ''
+      const payload = 'CWB-E35F3BF1-1E69-42DE-A4B0-2F7F8DCF98D3'
       const url = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${payload}`
       const request = new Request(url, {
         method: 'GET',
