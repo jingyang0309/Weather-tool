@@ -1,0 +1,179 @@
+.myNavbar {
+  background: linear-gradient(to bottom right, #221d52, #0f0c29);
+  width: auto;
+  display: flex;
+  align-items: center;
+  .navbar-link {
+    color: #faa;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .my-logo {
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  h2 {
+    color: #ddd;
+    margin: 0 20px;
+    font-size: 30px;
+  }
+  ul {
+    display: flex;
+    padding: 0;
+    list-style-type: none;
+    li {
+      margin: 0 8px;
+    }
+  }
+}
+.body {
+  display: flex;
+  aside {
+    width: 30%;
+    height: calc(100vh - 80px);
+    background-color: #000000;
+    color: #ddd;
+    padding: 10px;
+    padding-left: 30px;
+    .addfvrButton {
+      color: #ddd;
+      display: block;
+      background-color: #33279e;
+      border-radius: 8px;
+      margin: 5px 0 0 auto;
+      font-size: 16px;
+      text-decoration: none;
+      color: '#fff';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 110px;
+      padding: 5px;
+    }
+    .my-underline {
+      font-size: 20px;
+      width: 90%;
+      border-bottom: 1px solid #ddd;
+    }
+    ul {
+      list-style: none;
+      padding: 0 10px;
+      li {
+        font-size: 18px;
+        margin: 5px 0;
+      }
+      .placeLi:hover {
+        color: #9be1ff;
+        cursor: pointer;
+      }
+    }
+  }
+  .favorite-body {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 10%;
+    background-size: 100%;
+    background-attachment: fixed;
+    color: #fff;
+  }
+  .favorite-content {
+    width: 80%;
+    margin: 80px auto 0px;
+    .favorite-content-temp {
+      font-size: 70px;
+      margin: 0;
+      text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+    }
+    .favorite-table {
+      background-color: rgba(165, 165, 165, 0.767);
+      border-radius: 8px;
+      padding: 40px;
+      width: 80%;
+    }
+  }
+}
+.forecastBigBox {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+  // .forecastBox {
+  //   text-align: center;
+  // }
+  .weatherIcon {
+    width: 50px;
+    height: 50px;
+    // margin: 0 auto;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.my-text-blue {
+  color: #92e2ff;
+  margin: 0 8px 0 0;
+}
+// favorite
+.add-body {
+  background-size: 100%;
+  background-color: rgb(109, 109, 109);
+  width: 100%;
+  color: #ddd;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .add-ul {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 300px;
+    padding: 0;
+    li {
+      width: 80px;
+      margin: 5px 0;
+      font-size: 18px;
+      padding: 0;
+      input[type='checkbox'] {
+        cursor: pointer;
+        position: relative;
+        width: 1rem;
+        height: 1rem;
+        font-size: 0.9rem;
+        visibility: hidden;
+      }
+      input[type='checkbox']::after {
+        position: absolute;
+        top: 0;
+        background-color: #f3f3f3;
+        color: #fff;
+        width: 1.1rem;
+        height: 1.1rem;
+        display: inline-block;
+        visibility: visible;
+        padding-left: 0px;
+        text-align: center;
+        content: ' ';
+        border-radius: 50%;
+      }
+      
+      input[type='checkbox']:checked::after {
+        content: '✓';
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: rgb(0, 38, 255);
+      }
+      label {
+        margin-left: 6px;
+        cursor: pointer;
+      }
+    }
+  }
+}
