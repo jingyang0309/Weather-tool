@@ -67,6 +67,7 @@
       li {
         font-size: 18px;
         margin: 5px 0;
+        color: #fff;
       }
       .placeLi:hover {
         color: #9be1ff;
@@ -163,7 +164,7 @@
         content: ' ';
         border-radius: 50%;
       }
-      
+
       input[type='checkbox']:checked::after {
         content: '✓';
         font-size: 0.9rem;

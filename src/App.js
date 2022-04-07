@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Index from './pages/Index'
+import Main from './pages/Main'
 import Navbar from './components/Navnar'
 import AddArea from './pages/AddArea'
 import './styles/index.scss'
@@ -40,7 +40,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Index myfavorite={myfavorite} setMyfavorite={setMyfavorite} />
+                <Main myfavorite={myfavorite} setMyfavorite={setMyfavorite} />
               }
             />
           </Routes>

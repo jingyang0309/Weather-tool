@@ -1,23 +1,27 @@
+import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 // import { Provider, useSelector, useDispatch } from 'react-redux';
 function Aside(props) {
+  // const navigate = useNavigate()
   // const useDispatch = useDispatch()
   const { myfavorite, setSelectArea } = props
   const placeUl = myfavorite.map((v, i) => {
     return (
-      <li
-        key={v}
-        className="placeLi"
-        onClick={() => {
-          changPlace(v.toString())
-        }}
-      >
-        {v}
-      </li>
+      <Link key={v} to="/" style={{ textDecoration: 'none' }}>
+        <li
+          className="placeLi"
+          onClick={() => {
+            changPlace(v.toString())
+          }}
+        >
+          {v}
+        </li>
+      </Link>
     )
   })
   function changPlace(area) {
     setSelectArea(area)
+    // navigate('/')
   }
   return (
     <>

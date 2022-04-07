@@ -3,17 +3,23 @@ import './../App.css'
 import Aside from '../components/Aside'
 import Test from '../components/Test'
 import Test2 from '../components/Test2'
+import { useDispatch, useSelector } from 'react-redux'
+// import * as action from './../action/action'
+import { getDataNow } from './../action/action'
 
-export default function Index(props) {
+export default function Main(props) {
   const { myfavorite, setMyfavorite } = props
   const [weatherFuture, setWeatherFuture] = useState([])
   const [getData, setGetData] = useState(false)
+  const [getNowData, setGetNowData] = useState(false)
   const [selectArea, setSelectArea] = useState('基隆市')
-  const [tempNow, setTempNow] = useState('')
   const [weatherIcon1, setWeatherIcon1] = useState('')
   const [weatherIcon2, setWeatherIcon2] = useState('')
   const [weatherIcon3, setWeatherIcon3] = useState('')
   const [weatherBcg, setWeatherBcg] = useState('')
+  // Redux
+  const dataNow = useSelector((state) => state.dataNow)
+  const dispatch = useDispatch()
 
   function setWtIcon(i, src) {
     switch (i) {
@@ -32,6 +38,7 @@ export default function Index(props) {
   }
   useEffect(() => {
     setSelectArea(myfavorite[0])
+    setGetNowData(true)
   }, [myfavorite])
 
   useEffect(() => {
@@ -62,25 +69,24 @@ export default function Index(props) {
   }, [weatherFuture, selectArea, getData])
   useEffect(() => {
     if (!getData) return
-    // console.log('tempNow', tempNow)
     console.log('backgroud update')
     // chang background
-    if (!!tempNow.weather) {
-      if (tempNow.weather.match('晴天')) {
+    if (!!dataNow.weather) {
+      if (dataNow.weather.match('晴天')) {
         setWeatherBcg('img/bcg-sub.png')
-      } else if (tempNow.weather.match('雨')) {
+      } else if (dataNow.weather.match('雨')) {
         setWeatherBcg('img/bcg-rain.png')
       } else {
         setWeatherBcg('img/bcg-cloudy.png')
       }
     }
-  }, [tempNow, getData])
+  }, [getData])
 
   useEffect(() => {
     // Get 未來天氣
     ;(async function () {
       // 寫入你的paylaod
-      const payload = 'CWB-E35F3BF1-1E69-42DE-A4B0-2F7F8DCF98D3'
+      const payload = ''
       const url = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${payload}`
       const request = new Request(url, {
         method: 'GET',
@@ -97,8 +103,11 @@ export default function Index(props) {
       // console.log('目前在:', selectArea)
     })()
     // Get 當前天氣報導
+  }, [])
+
+  useEffect(() => {
+    if (!getNowData) return
     ;(async function () {
-      // const payload = 'CWB-E35F3BF1-1E69-42DE-A4B0-2F7F8DCF98D3'
       const lcoationName = {
         基隆市: '%E5%9F%BA%E9%9A%86',
         臺北市: '%E8%87%BA%E5%8C%97',
@@ -116,7 +125,8 @@ export default function Index(props) {
         宜蘭縣: '%E5%AE%9C%E8%98%AD',
         花蓮縣: '%E8%A5%BF%E6%9E%97',
       }
-      const url = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-E35F3BF1-1E69-42DE-A4B0-2F7F8DCF98D3&format=JSON&locationName=${lcoationName[selectArea]}`
+      const payload = ''
+      const url = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${payload}&format=JSON&locationName=${lcoationName[selectArea]}`
       const request = new Request(url, {
         method: 'GET',
       })
@@ -126,27 +136,29 @@ export default function Index(props) {
         console.log('Request data of now is error')
         return
       }
-      console.log('data of now :', data)
-      let tempNowObj = {}
-      tempNowObj.time = data.records.location[0].time.obsTime
+      // console.log('data at now :', data)
+      let dataNowObj = {}
+      if (data.records.location.length === 0) {
+        return
+      }
+      dataNowObj.dataTime = data.records.location[0].time.obsTime
       data.records.location[0].weatherElement.forEach((v) => {
         if (v.elementName === 'TEMP') {
-          tempNowObj.temp = Math.round(+v.elementValue)
+          dataNowObj.temperature = Math.round(+v.elementValue)
         }
         if (v.elementName === 'Weather') {
-          tempNowObj.weather = v.elementValue
+          dataNowObj.weather = v.elementValue
         }
         if (v.elementName === 'HUMD') {
-          tempNowObj.humd = v.elementValue
+          dataNowObj.wet = v.elementValue
         }
         if (v.elementName === 'WDSD') {
-          tempNowObj.wdsd = v.elementValue
+          dataNowObj.cloudy = v.elementValue
         }
       })
-      setTempNow(tempNowObj)
-      setGetData(true)
+      dispatch(getDataNow('getDataNow', dataNowObj))
     })()
-  }, [])
+  }, [selectArea])
   const weatherFutureData = weatherFuture.map((v, i) => {
     if (v.locationName === selectArea) {
       // console.log(v)
@@ -222,22 +234,22 @@ export default function Index(props) {
         <div className="favorite-content">
           <p>{selectArea}</p>
           <p className="favorite-content-temp">
-            {tempNow.temp}
+            {dataNow.temperature}
             <span style={{ fontSize: '28px' }}>度</span>
           </p>
           <p>
-            <span className="my-text-blue">天氣:</span> {tempNow.weather}{' '}
+            <span className="my-text-blue">天氣:</span> {dataNow.weather}{' '}
             <span className="my-text-blue" style={{ marginLeft: '24px' }}>
               濕度:
             </span>{' '}
-            {Math.floor(+tempNow.humd * 100)}%
+            {Math.floor(+dataNow.wet * 100)}%
           </p>
           <p>
             <span className="my-text-blue">風速:</span>
-            {tempNow.wdsd} 公尺/秒
+            {dataNow.cloudy} 公尺/秒
           </p>
           <p>
-            <span className="my-text-blue">資料時間:</span> {tempNow.time}
+            <span className="my-text-blue">資料時間:</span> {dataNow.dataTime}
           </p>
           <div className="favorite-table">
             <p style={{ fontSize: '22px' }}>天氣預測</p>

@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import choosePlace from '../reducer/choosePlace'
+import choosePlace from '../reducer/dataNow'
 // Store 的工作就是在應用程式中負責整合所有的 Reducer
 
 const store = createStore(choosePlace)
